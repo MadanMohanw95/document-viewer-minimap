@@ -1,0 +1,15 @@
+import React from 'react';
+import ReactMinimap from './ReactMinimap';
+import LeftContent from './LeftContent';
+import RightContent from './RightContent';
+
+const ArticleMinimap = () => (
+  <ReactMinimap
+    selector=".highlight"
+    height={window.innerHeight}
+    width={100}
+    LeftContent={<LeftContent />}
+    RightContent={<RightContent />}
+  />
+);
+export default ArticleMinimap;
