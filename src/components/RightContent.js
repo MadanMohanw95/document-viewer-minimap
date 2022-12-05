@@ -7,7 +7,7 @@ const RightContent = () => (
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non ex vitae
       felis accumsan eleifend. Morbi sit amet sem turpis. Aenean ac condimentum
       mauris. Nunc tellus imperdiet ultrices interdum, dui nulla lacinia
-      orci, <span style={{color: 'green', fontWeight: 'bold'}}>Vestibulum ante ipsum primis in faucibus orci </span>
+      orci, <span className='highlight' data-hl-color='green' style={{color: 'green', fontWeight: 'bold'}}>Vestibulum ante ipsum primis in faucibus orci </span>
       rutrum aliquam turpis lorem luctus ex. Maecenas finibus nibh velit,
       in pretium nulla ornare et. 
       luctus et ultrices posuere cubilia Curae;{' '}

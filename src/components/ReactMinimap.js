@@ -325,7 +325,7 @@ export class Minimap extends React.Component {
           onMouseUp={this.up}
         >
           {this.state.viewport}
-          {this.props.RightContent}
+          {this.props.LeftContent}
         </div>
 
         <div
@@ -344,7 +344,7 @@ export class Minimap extends React.Component {
             this.rightsource = container;
           }}
         >
-          {this.props.RightContent}
+          {this.props.LeftContent}
         </div>
       </div>
     );
