@@ -8,6 +8,7 @@ const ArticleMinimap = () => (
     selector=".highlight"
     height={window.innerHeight}
     width={100}
+    keepAspectRatio={false}
     LeftContent={<LeftContent />}
     RightContent={<RightContent />}
   />

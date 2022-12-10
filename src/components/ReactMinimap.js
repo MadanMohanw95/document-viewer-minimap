@@ -38,6 +38,7 @@ export class Minimap extends React.Component {
   }
 
   componentDidMount() {
+    console.log("ReactMinimap: mount->", this.props);
     const { onMountCenterOnX, onMountCenterOnY } = this.props;
     setTimeout(() =>
       this.synchronize({
@@ -93,6 +94,7 @@ export class Minimap extends React.Component {
     }
 
     const nodes = this.leftsource.querySelectorAll(this.props.selector);
+    console.log("ReactMinimap:init-> nodes ", nodes);
     this.setState({
       ...this.state,
       height,
@@ -337,15 +339,15 @@ export class Minimap extends React.Component {
         >
           {this.props.LeftContent}
         </div>
-        <div
+        {/* <div
           className={'minimap-container-scroll'}
           onScroll={this.synchronizeRight}
           ref={(container) => {
             this.rightsource = container;
           }}
         >
-          {this.props.LeftContent}
-        </div>
+          {this.props.RightContent}
+        </div> */}
       </div>
     );
   }
