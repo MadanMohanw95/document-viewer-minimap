@@ -20,7 +20,6 @@ export class Minimap extends React.Component {
     this.down = this.down.bind(this);
     this.move = this.move.bind(this);
     this.synchronize = this.synchronize.bind(this);
-    this.synchronizeRight = this.synchronizeRight.bind(this);
     this.init = this.init.bind(this);
     this.up = this.up.bind(this);
 
@@ -183,8 +182,6 @@ export class Minimap extends React.Component {
 
     this.leftsource.scrollLeft = Math.round(left);
     this.leftsource.scrollTop = Math.round(top);
-    this.rightsource.scrollLeft = Math.round(left);
-    this.rightsource.scrollTop = Math.round(top);
     this.redraw();
   }
 
@@ -214,14 +211,10 @@ export class Minimap extends React.Component {
       if (options.centerOnX === true) {
         this.leftsource.scrollLeft =
           this.leftsource.scrollWidth / 2 - dims[0] / 2;
-        this.rightsource.scrollLeft =
-          this.leftsource.scrollWidth / 2 - dims[0] / 2;
       }
 
       if (options.centerOnY === true) {
         this.leftsource.scrollTop =
-          this.leftsource.scrollHeight / 2 - dims[1] / 2;
-        this.rightsource.scrollTop =
           this.leftsource.scrollHeight / 2 - dims[1] / 2;
       }
     }
@@ -231,61 +224,10 @@ export class Minimap extends React.Component {
     const left = this.l / coefX;
     const top = this.t / coefY;
     // TODO : get top & left
-    this.rightsource.scrollLeft = Math.round(left);
-    this.rightsource.scrollTop = Math.round(top);
 
     this.redraw();
   }
 
-  synchronizeRight(options) {
-    const { width, height } = this.state;
-
-    const rect = this.rightsource.getBoundingClientRect();
-
-    const dims = [rect.width, rect.height];
-    const scroll = [this.rightsource.scrollLeft, this.rightsource.scrollTop];
-    const scaleX = width / this.rightsource.scrollWidth;
-    const scaleY = height / this.rightsource.scrollHeight;
-
-    const lW = dims[0] * scaleX;
-    const lH = dims[1] * scaleY;
-    const lX = scroll[0] * scaleX;
-    const lY = scroll[1] * scaleY;
-
-    // Ternary operation includes sanity check
-    this.w =
-      Math.round(lW) > this.state.width ? this.state.width : Math.round(lW);
-    this.h =
-      Math.round(lH) > this.state.height ? this.state.height : Math.round(lH);
-    this.l = Math.round(lX);
-    this.t = Math.round(lY);
-
-    if (options !== undefined) {
-      if (options.centerOnX === true) {
-        this.leftsource.scrollLeft =
-          this.rightsource.scrollWidth / 2 - dims[0] / 2;
-        this.rightsource.scrollLeft =
-          this.rightsource.scrollWidth / 2 - dims[0] / 2;
-      }
-
-      if (options.centerOnY === true) {
-        this.leftsource.scrollTop =
-          this.rightsource.scrollHeight / 2 - dims[1] / 2;
-        this.rightsource.scrollTop =
-          this.rightsource.scrollHeight / 2 - dims[1] / 2;
-      }
-    }
-
-    const coefX = width / this.rightsource.scrollWidth;
-    const coefY = height / this.rightsource.scrollHeight;
-    const left = this.l / coefX;
-    const top = this.t / coefY;
-    // TODO : get top & left
-    this.leftsource.scrollLeft = Math.round(left);
-    this.leftsource.scrollTop = Math.round(top);
-
-    this.redraw();
-  }
 
   redraw() {
     this.setState({
