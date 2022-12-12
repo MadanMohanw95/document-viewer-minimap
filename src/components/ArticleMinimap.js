@@ -7,7 +7,7 @@ const ArticleMinimap = () => (
   <ReactMinimap
     selector=".highlight"
     height={window.innerHeight}
-    width={100}
+    width={150}
     keepAspectRatio={false}
     LeftContent={<LeftContent />}
     RightContent={<RightContent />}

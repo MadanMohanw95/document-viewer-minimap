@@ -278,6 +278,9 @@ export class Minimap extends React.Component {
           ref={(container) => {
             this.leftsource = container;
           }}
+          style={{
+            marginRight: `${width}px`,
+          }}
         >
           {this.props.LeftContent}
         </div>

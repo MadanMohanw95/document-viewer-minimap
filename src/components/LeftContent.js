@@ -39,7 +39,7 @@ const LeftContent = () => {
     console.log("difText Changed");
   }
 
-  const paragraphs = diffText.split(/(?:\r\n|\n|\r)/g);
+  const paragraphs = diffText.split(/(?:\r\n|\n|\r)/g).filter((par) => par.length > 2);
   var cleaned = diffText.replace(/(?:\r\n|\n|\r)/g, '</div><div>');
   cleaned = cleaned.replace(/<ins(.*?)>(.*?)<\/ins>/g, '');
   cleaned = '<div>' + cleaned + '</div>';
