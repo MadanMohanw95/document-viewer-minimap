@@ -1,24 +1,17 @@
-## Steps to run the project and app running locally
+### Steps to run the project and app running locally
 
-
-## Clone the project
-
-### Clone using HTTPS
-
-git clone https://github.com/MadanMohanw95/document-viewer-minimap.
-
-### Clone using SSH
-git clone git@github.com:MadanMohanw95/document-viewer-minimap.git
+## From bitbucket
+git clone https://tudoreanu@bitbucket.org/wellington-m/diffviewer.git
 
 ## Run below command to install node modules 
 
-### `npm install`
+`yarn install`
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm run start`
+`yarn start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
