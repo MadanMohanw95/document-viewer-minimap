@@ -1,7 +1,6 @@
 ### Steps to run the project and app running locally
 
-## From bitbucket
-git clone https://tudoreanu@bitbucket.org/wellington-m/diffviewer.git
+## Clone the project
 
 ## Run below command to install node modules 
 
