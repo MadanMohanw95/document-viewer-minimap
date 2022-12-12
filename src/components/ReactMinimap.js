@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import Child from './Child';
 import './react-minimap.css';
 
 export class Minimap extends React.Component {
@@ -10,7 +9,6 @@ export class Minimap extends React.Component {
     width: 200,
     height: 200,
     keepAspectRatio: false,
-    childComponent: Child,
     onMountCenterOnX: false,
     onMountCenterOnY: false,
   };
@@ -26,7 +24,6 @@ export class Minimap extends React.Component {
     this.resize = _.throttle(this.synchronize, 100);
 
     this.state = {
-      children: null,
       viewport: null,
       width: props.width,
       height: props.height,
@@ -56,9 +53,7 @@ export class Minimap extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.keepAspectRatio !== this.props.keepAspectRatio) {
       setTimeout(this.synchronize);
-    } else if (nextProps.children !== this.props.children) {
-      setTimeout(this.synchronize);
-    }
+    } 
   }
 
   componentDidUpdate() {
@@ -71,8 +66,7 @@ export class Minimap extends React.Component {
   }
 
   init() {
-    const { childComponent, keepAspectRatio } = this.props;
-    const ChildComponent = childComponent;
+    const { keepAspectRatio } = this.props;
     const { scrollWidth, scrollHeight, scrollTop, scrollLeft } =
       this.leftsource;
     const sourceRect = this.leftsource.getBoundingClientRect();
@@ -98,25 +92,6 @@ export class Minimap extends React.Component {
       ...this.state,
       height,
       width,
-      children: _.map(nodes, (node, key) => {
-        const { width, height, left, top } = node.getBoundingClientRect();
-
-        const wM = width * ratioX;
-        const hM = height * ratioY;
-        const xM = (left + scrollLeft - sourceRect.left) * ratioX;
-        const yM = (top + scrollTop - sourceRect.top) * ratioY;
-
-        return (
-          <ChildComponent
-            key={key}
-            width={Math.round(wM)}
-            height={Math.round(hM)}
-            left={Math.round(xM)}
-            top={Math.round(yM)}
-            node={node}
-          />
-        );
-      }),
     });
   }
 
@@ -284,15 +259,6 @@ export class Minimap extends React.Component {
         >
           {this.props.LeftContent}
         </div>
-        {/* <div
-          className={'minimap-container-scroll'}
-          onScroll={this.synchronizeRight}
-          ref={(container) => {
-            this.rightsource = container;
-          }}
-        >
-          {this.props.RightContent}
-        </div> */}
       </div>
     );
   }

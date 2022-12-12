@@ -36,14 +36,6 @@ article {
   /* margin: auto; */
 }
 
-.highlight.coral {
-  background-color: coral;
-}
-
-.highlight.aqua {
-  background-color: aqua;
-}
-
 .minimap-container {
   /* max-width: 600px; */
   height: 100vh;
