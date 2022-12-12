@@ -23,7 +23,12 @@ body {
   flex-shrink: 1;
   flex-basis: 50%;
   /* color:#fff; */
-  
+}
+
+#clickable:hover{
+  background-color: rgba(60, 60, 60, 0.5);
+  border: 1px solid #aaa;
+  cursor:pointer;
 }
 
 .App {
