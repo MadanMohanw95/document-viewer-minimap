@@ -27,6 +27,8 @@ export class Minimap extends React.Component {
       viewport: null,
       width: props.width,
       height: props.height,
+      fontSize: 10,
+      ratioX: 1,
     };
 
     this.downState = false;
@@ -67,14 +69,19 @@ export class Minimap extends React.Component {
 
   init() {
     const { keepAspectRatio } = this.props;
-    const { scrollWidth, scrollHeight, scrollTop, scrollLeft } =
+    const { scrollWidth, scrollHeight, scrollTop, scrollLeft, fontSize } =
       this.leftsource;
     const sourceRect = this.leftsource.getBoundingClientRect();
+
+    console.log("ReactMinimap:init:leftsource.getBoundingClientRect(): ", sourceRect);
+    console.log("ReactMinimap:init: scrollWidth, scrollHeight, scrollTop, scrollLeft",scrollWidth, scrollHeight, scrollTop, scrollLeft);
+    console.log("ReactMinimap:init: fontSize", fontSize);
 
     let { width, height } = this.props;
 
     let ratioX = width / scrollWidth;
     let ratioY = height / scrollHeight;
+    console.log("ReactMinimap:init: ratioX, ratioY", ratioX, ratioY);
 
     if (keepAspectRatio) {
       if (ratioX < ratioY) {
@@ -86,12 +93,15 @@ export class Minimap extends React.Component {
       }
     }
 
-    const nodes = this.leftsource.querySelectorAll(this.props.selector);
-    console.log("ReactMinimap:init-> nodes ", nodes);
+    //edi see if keeping the ratioX only works
+    //width = scrollWidth;
+    //height = scrollHeight;
+
     this.setState({
       ...this.state,
       height,
       width,
+      ratioX,
     });
   }
 
@@ -170,17 +180,17 @@ export class Minimap extends React.Component {
     const scaleX = width / this.leftsource.scrollWidth;
     const scaleY = height / this.leftsource.scrollHeight;
 
-    const lW = dims[0] * scaleX;
-    const lH = dims[1] * scaleY;
-    const lX = scroll[0] * scaleX;
-    const lY = scroll[1] * scaleY;
+    const lW = dims[0];// * scaleX;
+    const lH = dims[1];// * scaleY;
+    const lX = scroll[0];// * scaleX;
+    const lY = scroll[1];// * scaleY;
 
     // Ternary operation includes sanity check
-    this.w =
-      Math.round(lW) > this.state.width ? this.state.width : Math.round(lW);
-    this.h =
-      Math.round(lH) > this.state.height ? this.state.height : Math.round(lH);
-    this.l = Math.round(lX);
+    this.w = lW;
+      //Math.round(lW) > this.state.width ? this.state.width : Math.round(lW);
+    this.h = lH;
+      //Math.round(lH) > this.state.height ? this.state.height : Math.round(lH);
+    this.l = lX;
     this.t = Math.round(lY);
     if (options !== undefined) {
       if (options.centerOnX === true) {
@@ -205,6 +215,7 @@ export class Minimap extends React.Component {
 
 
   redraw() {
+    console.log("ReactMinimap:redraw: ", this.w, this.h, this.l, this.t);
     this.setState({
       ...this.state,
       viewport: (
@@ -222,16 +233,19 @@ export class Minimap extends React.Component {
   }
 
   render() {
-    const { width, height } = this.state;
+    const { width, height, ratioX } = this.state;
+    console.log("ReactMinimap:render: ", width, height, ratioX);
 
     return (
       <div className={'minimap-container ' + this.props.className}>
         <div
           className="minimap"
           style={{
-            width: `${width}px`,
-            height: `${height}px`,
-            fontSize: '0.114rem',
+            width: `${width/ratioX}px`,
+            height: `${height/ratioX}px`,
+            /* fontSize: '0.114rem', */
+            transform: `scale(${ratioX})`,
+            transformOrigin: `top right`,
           }}
           ref={(minimap) => {
             this.minimap = minimap;
@@ -244,7 +258,7 @@ export class Minimap extends React.Component {
           onMouseUp={this.up}
         >
           {this.state.viewport}
-          {this.props.LeftContent}
+          {this.props.children}
         </div>
 
         <div
@@ -254,10 +268,10 @@ export class Minimap extends React.Component {
             this.leftsource = container;
           }}
           style={{
-            marginRight: `${width}px`,
+            marginRight: `${width+50}px`,
           }}
         >
-          {this.props.LeftContent}
+          {this.props.children}
         </div>
       </div>
     );

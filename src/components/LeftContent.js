@@ -37,12 +37,13 @@ const LeftContent = () => {
 
   const paragraphs = diffText.split(/(?:\r\n|\n|\r)/g).filter((par) => par.length > 2);
   return (paragraphs.map((par, index)=>{
-      if(par.length > 2)
-        return (
-          <SideBySide diffText={par}
+      return (
+          <SideBySide key={index}
+                      diffText={par}
                       paragraphIndex={index}
           />
-        );
+      );
+      
     })
   );
 };

@@ -4,11 +4,11 @@ import LeftContent from './LeftContent';
 
 const ArticleMinimap = () => (
   <ReactMinimap
-    selector=".highlight"
-    height={window.innerHeight}
+    height={window.innerHeight-200}
     width={150}
     keepAspectRatio={false}
-    LeftContent={<LeftContent />}
-  />
+  >
+    <LeftContent />
+  </ReactMinimap>
 );
 export default ArticleMinimap;
