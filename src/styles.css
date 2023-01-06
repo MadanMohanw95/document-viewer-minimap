@@ -58,6 +58,7 @@ article {
   margin: 0;
   background-color: red;
   border: none;
+  overflow: scroll;
   /* opacity: 0.5; */
   /* transition: all 0.3s; */
 }
