@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import _ from "lodash";
 import ReactMinimap from './ReactMinimap.tsx';
 import LeftContent from './LeftContent.tsx';
-const fileName = '2021-2022_10K-ipsum-lorem.json'
+const fileName = '2021-2022_10K-ipsum-lorem.json';
+const collapsedByDefault = false; //default state of the paragraphs that are exactly the same
 
 const ArticleMinimap = () => {
   const [data, setData] = useState([]);
@@ -24,7 +25,7 @@ const ArticleMinimap = () => {
       .then(function (myJson) {
         setData(myJson)
         const para = myJson.diffed.split(/(?:\r\n|\n|\r)/g).filter((par) => par.length > 2);
-        setCollapsed(Array(para.length).fill(true));
+        setCollapsed(Array(para.length).fill(collapsedByDefault));
       });
   }
 
