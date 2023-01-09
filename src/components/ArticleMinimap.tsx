@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactMinimap from './ReactMinimap';
-import LeftContent from './LeftContent';
+import ReactMinimap from './ReactMinimap.tsx';
+import LeftContent from './LeftContent.tsx';
 
 const ArticleMinimap = () => (
   <ReactMinimap

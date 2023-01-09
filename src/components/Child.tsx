@@ -1,7 +1,7 @@
 import React from 'react';
 import './react-minimap.css';
 
-export class Child extends React.Component {
+export class Child extends React.Component<any, any> {
     
   render() {
     const { width, height, left, top } = this.props;

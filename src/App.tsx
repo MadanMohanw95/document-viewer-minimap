@@ -1,5 +1,5 @@
 import './App.css';
-import ArticleMinimap from "./components/ArticleMinimap";
+import ArticleMinimap from "./components/ArticleMinimap.tsx";
 
 import "./styles.css";
 

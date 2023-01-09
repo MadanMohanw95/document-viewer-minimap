@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SideBySide from './SideBySide';
+import SideBySide from './SideBySide.tsx';
 
 const fileName = '2021-2022_10K-ipsum-lorem.json'
 
