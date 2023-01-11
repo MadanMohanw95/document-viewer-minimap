@@ -1,17 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import './react-minimap.css';
+import './react-minimap.scss';
 
 export class Minimap extends React.Component {
-
-  static defaultProps = {
-    className: '',
-    width: 200,
-    height: 200,
-    keepAspectRatio: false,
-    onMountCenterOnX: false,
-    onMountCenterOnY: false,
-  };
 
   constructor(props) {
     super(props);
@@ -37,12 +28,8 @@ export class Minimap extends React.Component {
 
   componentDidMount() {
     console.log("ReactMinimap: mount->", this.props);
-    const { onMountCenterOnX, onMountCenterOnY } = this.props;
     setTimeout(() =>
-      this.synchronize({
-        centerOnX: onMountCenterOnX,
-        centerOnY: onMountCenterOnY,
-      })
+      this.synchronize()
     );
     window.addEventListener('resize', this.resize);
     this.init();
@@ -50,12 +37,6 @@ export class Minimap extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resize);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.keepAspectRatio !== this.props.keepAspectRatio) {
-      setTimeout(this.synchronize);
-    } 
   }
 
   componentDidUpdate() {
@@ -68,7 +49,6 @@ export class Minimap extends React.Component {
   }
 
   init() {
-    const { keepAspectRatio } = this.props; //to be removed - it is not currently needed or used
     const { scrollWidth, scrollHeight, scrollTop, scrollLeft } =
       this.leftsource;
     const sourceRect = this.leftsource.getBoundingClientRect();
@@ -81,16 +61,6 @@ export class Minimap extends React.Component {
     let ratioX = width / scrollWidth; //using this ratio only because it preserves how each row in minimap looks
     let ratioY = height / scrollHeight; //ignored for now
     console.log("ReactMinimap:init: ratioX, ratioY", ratioX, ratioY);
-
-    if (keepAspectRatio) {
-      if (ratioX < ratioY) {
-        ratioY = ratioX;
-        height = Math.round(scrollHeight / (scrollWidth / width));
-      } else {
-        ratioX = ratioY;
-        width = Math.round(scrollWidth / (scrollHeight / height));
-      }
-    }
 
     this.setState({
       ...this.state,
@@ -113,10 +83,6 @@ export class Minimap extends React.Component {
 
     console.log("ReactMinimap:down:this.x, this.y: ", this.x, this.y);
 
-    // console.log("ReactMinimap:down:this.minimap.scrollLeft, this.minimap.scrollTop: ", this.minimap.scrollLeft, this.minimap.scrollTop);
-    // this.l += this.minimap.scrollLeft; //scroll is in large units
-    // this.t += this.minimap.scrollTop;
-
     this.downState = true;
     this.move(e);
   }
@@ -128,7 +94,7 @@ export class Minimap extends React.Component {
   move(e) {
     if (this.downState === false) return;
 
-    const { width, height, ratioX } = this.state; //width and height are in small scale (minimap) units
+    const { ratioX } = this.state;
     let event;
 
     e.preventDefault();
@@ -178,8 +144,6 @@ export class Minimap extends React.Component {
     this.l = this.l < 0 ? 0 : this.l;
     this.t = this.t < 0 ? 0 : this.t;
 
-    //const coefX = width / this.leftsource.scrollWidth;
-    //const coefY = height / this.leftsource.scrollHeight;
     const left = this.l;
     const top = this.t;
 
@@ -188,7 +152,7 @@ export class Minimap extends React.Component {
     this.redraw();
   }
 
-  synchronize(options) {
+  synchronize() {
     const { ratioX } = this.state;
 
     //everything is in large (left source) units
@@ -219,25 +183,6 @@ export class Minimap extends React.Component {
     if(this.t + this.h > this.minimap.scrollTop + this.minimap.getBoundingClientRect().height / ratioX)
       this.minimap.scrollTop += -(this.minimap.scrollTop + this.minimap.getBoundingClientRect().height / ratioX) +
                                 (this.t + this.h);
-
-    //old code, not used below this line
-    // if (options !== undefined) {
-    //   if (options.centerOnX === true) {
-    //     this.leftsource.scrollLeft =
-    //       this.leftsource.scrollWidth / 2 - dims[0] / 2;
-    //   }
-
-    //   if (options.centerOnY === true) {
-    //     this.leftsource.scrollTop =
-    //       this.leftsource.scrollHeight / 2 - dims[1] / 2;
-    //   }
-    // }
-
-    // const coefX = width / this.leftsource.scrollWidth;
-    // const coefY = height / this.leftsource.scrollHeight;
-    // const left = this.l / coefX;
-    // const top = this.t / coefY;
-    // TODO : get top & left
 
     this.redraw();
   }
@@ -297,7 +242,7 @@ export class Minimap extends React.Component {
             this.leftsource = container;
           }}
           style={{
-            marginRight: `${width+50}px`,
+            marginRight: `${width+15}px`,
           }}
         >
           {this.props.children}

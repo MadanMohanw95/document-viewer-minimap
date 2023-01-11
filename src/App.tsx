@@ -1,7 +1,6 @@
-import './App.css';
 import ArticleMinimap from "./components/ArticleMinimap.tsx";
 
-import "./styles.css";
+import "./styles.scss";
 
 function App() {
   return (
